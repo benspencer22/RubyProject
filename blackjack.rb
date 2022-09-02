@@ -13,27 +13,78 @@
 
 CARDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]
 
-dealer = [rand(12-1), rand(12-1)]
-player = [rand(12-1), rand(12-1)]
+dealer = [CARDS[rand(0..13)], CARDS[rand(0..13)]]
+player = [CARDS[rand(0..13)], CARDS[rand(0..13)]]
 
 def checkHand(hand)
 
-	bust = false
+	bust = true
 	
-	bustnum = hand[0] + hand[1]
+	bustnum = 0 
+	
+	for card in hand
+		bustnum = bustnum + card
+	end
 	
 	if bustnum > 21 then
 		puts "You busted!"
-	else
-		bust = true
+		bust = false
 	end
+	
+	return bust
+end
+
+def checkTotal(hand)
+	
+	bustnum = 0 
+	
+	for card in hand
+		bustnum = bustnum + card
+	end
+	
+	return bustnum
+end
+
+def printHand(hand)
+
+	for card in hand
+		print "%s ".chomp % [card]
+	end
+	puts ''
+end
+
+def printDealer(hand)
+
+	print "%s ?" % [hand[0]]
+	puts ''
+end
+
+printHand(player)
+printDealer(dealer)
+
+check = true
+
+while check do
+	puts"Which action do you want to perform: Hit(H) Stay(S)"
+
+	action = gets.chomp
+
+	if action == "H" || action == 'h'
+		player << CARDS[rand(0..13)]
+	end
+	check = checkHand(player)
+	if action == "S" || action == 's'
+		check = false
+	end 
+	printHand(player)
+	printDealer(dealer)
 	
 end
 
-puts "%s %s" % [player[0], player[1]]
-puts "%s %s" % [dealer[0], dealer[1]]
+print CARDS[13]
 
-puts"Which action do you want to perform: Hit(H) Stay(S) 
+
+
 
 
 
